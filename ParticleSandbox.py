@@ -4,9 +4,9 @@ from vector import Vector
 
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-position = Vector(300.0, 300.0)
+position = Vector(100.0, 100.0)
 
-velocity = Vector(0.05, 0.05)
+velocity = Vector(1.0, 0.9)
 
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -19,7 +19,7 @@ r=20
 
 
 pygame.init()
-screen = pygame.display.set_mode((460, 480))
+screen = pygame.display.set_mode((600, 600))
 
 
 red = (255,0,0)
@@ -36,8 +36,25 @@ while True:
     screen.fill(black)
 
     pygame.draw.circle(screen, red, (int(position.x),int(position.y)), r, r/10)
-    position.x = position.x+velocity.x
+    position.x = position.x+-velocity.x
     position.y = position.y+velocity.y
+    if position.x < r:
+        velocity.x = -velocity.x
+        position.x = r
+
+    if position.x > 600-r:
+        velocity.x = -velocity.x
+        position.x = 600-r
+
+    if position.y < r:
+        velocity.y = -velocity.y
+        position.y = r
+
+    if position.y > 600-r:
+        velocity.y = -velocity.y
+        position.y = 600-r
+
+
 
     pygame.display.update()
 
