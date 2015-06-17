@@ -5,7 +5,7 @@ x=300.0
 y=300.0
 xspeed=0.01
 yspeed=0.01
-
+r=20
 
 
 
@@ -28,7 +28,7 @@ while True:
 
     screen.fill(black)
 
-    pygame.draw.circle(screen, red, (int(x),int(y)), 20, 5)
+    pygame.draw.circle(screen, red, (int(x),int(y)), r, r/10)
     x = x+xspeed
     y = y+yspeed
 
