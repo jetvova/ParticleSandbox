@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 import pygame, sys
 
-
-
-
+x=300.0
+y=300.0
+xspeed=0.01
+yspeed=0.01
 
 
 
@@ -27,7 +28,9 @@ while True:
 
     screen.fill(black)
 
-    pygame.draw.circle(screen, red, (300,300), 20, 5)
+    pygame.draw.circle(screen, red, (int(x),int(y)), 20, 5)
+    x = x+xspeed
+    y = y+yspeed
 
     pygame.display.update()
 
