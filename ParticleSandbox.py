@@ -1,12 +1,21 @@
 #!/usr/bin/env python
 import pygame, sys
+from vector import Vector
 
-x=300.0
-y=300.0
-xspeed=0.01
-yspeed=0.01
+
+#IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+position = Vector(300.0, 300.0)
+
+velocity = Vector(0.05, 0.05)
+
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#NONIMPORTANT VARIABLES==========================
+
+
 r=20
-
+#================================================
 
 
 pygame.init()
@@ -24,13 +33,11 @@ pink = (255,200,200)
 
 
 while True:
-
-
     screen.fill(black)
 
-    pygame.draw.circle(screen, red, (int(x),int(y)), r, r/10)
-    x = x+xspeed
-    y = y+yspeed
+    pygame.draw.circle(screen, red, (int(position.x),int(position.y)), r, r/10)
+    position.x = position.x+velocity.x
+    position.y = position.y+velocity.y
 
     pygame.display.update()
 
