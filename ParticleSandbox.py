@@ -4,11 +4,17 @@ from vector import Vector
 from particle import Particle
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-p = Particle()
-p.mass = 1.0
-p.pos = Vector(100.0, 100.0)
-p.vel = Vector(1.0, 0.9)
-p.radius = 20.0
+p1 = Particle()
+p1.mass = 1.0
+p1.pos = Vector(100.0, 100.0)
+p1.vel = Vector(1.0, 0.9)
+p1.radius = 20.0
+p2 = Particle()
+p2.mass = 1.0
+p2.pos = Vector(100.0, 100.0)
+p2.vel = Vector(-1.0, -0.9)
+p2.radius = 20.0
+
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 #NONIMPORTANT VARIABLES==========================
@@ -32,9 +38,13 @@ pink = (255,200,200)
 
 while True:
     screen.fill(black)
-    p.draw(screen)
-    p.movement()
-    p.walls()
+    p1.draw(screen)
+    p2.draw(screen)
+
+    p1.movement()
+    p1.walls()
+    p2.movement()
+    p2.walls()
 
 
 
