@@ -21,7 +21,6 @@ p.radius = 20.0
 pygame.init()
 screen = pygame.display.set_mode((600, 600))
 
-
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
@@ -31,29 +30,12 @@ black = (0,0,0)
 pink = (255,200,200)
 
 
-
 while True:
     screen.fill(black)
-    pygame.draw.circle(screen, red, (int(p.pos.x),int(p.pos.y)), int(p.radius), int(p.radius/10))
+    p.draw(screen)
+    p.movement()
+    p.walls()
 
-
-    p.pos.x = p.pos.x+p.vel.x
-    p.pos.y = p.pos.y+p.vel.y
-    if p.pos.x < p.radius:
-        p.vel.x = -p.vel.x
-        p.pos.x = p.radius
-
-    if p.pos.x > 600-p.radius:
-        p.vel.x = -p.vel.x
-        p.pos.x = 600-p.radius
-
-    if p.pos.y < p.radius:
-        p.vel.y = -p.vel.y
-        p.pos.y = p.radius
-
-    if p.pos.y > 600-p.radius:
-        p.vel.y = -p.vel.y
-        p.pos.y = 600-p.radius
 
 
 
