@@ -17,7 +17,7 @@ class Particle:
         self.radius = 1.0
 
     def draw(self, screen):
-        pygame.draw.circle(screen, red, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10))
+        pygame.draw.circle(screen, red, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10.0)+1)
 
     def movement(self):
         self.pos.x = self.pos.x+self.vel.x
