@@ -1,20 +1,24 @@
 #!/usr/bin/env python
 from numpy.lib.function_base import average
-import pygame, sys, random, time
+import pygame, sys, random, time, math
 from vector import Vector
 from particle import Particle
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 200
+n = 20
 plist = []
 
 for i in range (0,n):
     p1 = Particle()
     p1.mass = 1.0
-    p1.pos = Vector(100.0, 100.0)
-    p1.vel = Vector(random.randint(0,1000)/5.0, random.randint(0, 1000)/5.0)
-    p1.radius = random.randint(1, 20)
+    p1.pos = Vector(float(random.randint(20, 500)), float(random.randint(20, 500)))
+    p1.vel = Vector(random.randint(0,2000)/5.0, random.randint(0, 2000)/5.0)
+    p1.radius = random.randint(1, 5)
     plist.append(p1)
+
+
+def dist(v1,v2):
+    return math.sqrt( (v1.x - v2.x)**2 + (v1.y - v2.y)**2 )
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -47,13 +51,21 @@ while True:
     averageFps = (fps + (10*averageFps))/11
     label = myfont.render("FPS=" + str(int(averageFps)), 1, (255,255,0))
     screen.blit(label, (5, 5))
-
     for i in range (0,n):
         plist[i].draw(screen)
 
     for i in range (0,n):
         plist[i].movement(dt)
         plist[i].walls()
+
+    for i in range (0, n):
+        for j in range (i+1, n):
+            pi = plist[i]
+            pj = plist[j]
+            if dist(pi.pos, pj.pos) < pi.radius + pj.radius:
+                pi.collision()
+                pj.collision()
+
 
     pygame.display.update()
 
