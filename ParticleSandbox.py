@@ -38,8 +38,9 @@ t=time.time()
 averageFps = 0.0
 
 while True:
-    dt = time.time() - t
-    t = time.time()
+    now = time.time()
+    dt = now - t
+    t = now
 
     screen.fill(black)
     fps = 1 / dt
