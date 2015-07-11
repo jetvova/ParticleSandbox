@@ -17,8 +17,7 @@ for i in range (0,n):
     plist.append(p1)
 
 
-def dist(v1,v2):
-    return math.sqrt( (v1.x - v2.x)**2 + (v1.y - v2.y)**2 )
+
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -62,7 +61,7 @@ while True:
         for j in range (i+1, n):
             pi = plist[i]
             pj = plist[j]
-            if dist(pi.pos, pj.pos) < pi.radius + pj.radius:
+            if Vector.dist(pi.pos, pj.pos) < pi.radius + pj.radius:
                 pi.collision()
                 pj.collision()
 
