@@ -16,7 +16,7 @@ class Particle:
         self.mass = 0.0
         self.radius = 1.0
         self.color = blue
-
+        self.mass = 1.0
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10.0)+1)
 
@@ -41,7 +41,16 @@ class Particle:
             self.vel.y = -self.vel.y
             self.pos.y = 600-self.radius
 
-    def collision(self):
-        self.vel = Vector(0.0, 0.0, 0.0)
-        self.color = colorNature
 
+    @staticmethod
+    def Bounce(p1, p2):
+        p1.color = colorNature
+        p2.color = colorNature
+        v1 = p1.vel-(p1.pos-p2.pos) * Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos)**2) * (2*p2.mass/(p1.mass+p2.mass))
+
+        v2 = p2.vel-(p2.pos-p1.pos) * Vector.dotProduct(p2.vel - p1.vel , p2.pos - p1.pos)/ (Vector.len(p2.pos- p1.pos)**2) * (2*p1.mass/(p1.mass+p2.mass))
+
+        p1.vel = v1
+        p2.vel = v2
+
+# https://en.wikipedia.org/wiki/Elastic_collision

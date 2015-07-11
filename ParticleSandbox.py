@@ -5,7 +5,7 @@ from vector import Vector
 from particle import Particle
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 20
+n = 10
 plist = []
 
 for i in range (0,n):
@@ -13,7 +13,8 @@ for i in range (0,n):
     p1.mass = 1.0
     p1.pos = Vector(float(random.randint(20, 500)), float(random.randint(20, 500)))
     p1.vel = Vector(random.randint(0,2000)/5.0, random.randint(0, 2000)/5.0)
-    p1.radius = random.randint(1, 5)
+    p1.radius = float(random.randint(1, 50))
+    p1.mass = p1.radius
     plist.append(p1)
 
 
@@ -62,8 +63,7 @@ while True:
             pi = plist[i]
             pj = plist[j]
             if Vector.dist(pi.pos, pj.pos) < pi.radius + pj.radius:
-                pi.collision()
-                pj.collision()
+                Particle.Bounce(pi, pj)
 
 
     pygame.display.update()
@@ -72,5 +72,4 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-
 
