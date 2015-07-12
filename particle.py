@@ -44,13 +44,13 @@ class Particle:
 
     @staticmethod
     def Bounce(p1, p2):
-        p1.color = colorNature
-        p2.color = colorNature
-        v1 = p1.vel-(p1.pos-p2.pos) * Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos)**2) * (2*p2.mass/(p1.mass+p2.mass))
+        collisionVelocity = Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos))
+        if collisionVelocity < 0:
+            # https://en.wikipedia.org/wiki/Elastic_collision
+            v1 = p1.vel-(p1.pos-p2.pos) * Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos)**2) * (2*p2.mass/(p1.mass+p2.mass))
+            v2 = p2.vel-(p2.pos-p1.pos) * Vector.dotProduct(p2.vel - p1.vel , p2.pos - p1.pos)/ (Vector.len(p2.pos- p1.pos)**2) * (2*p1.mass/(p1.mass+p2.mass))
 
-        v2 = p2.vel-(p2.pos-p1.pos) * Vector.dotProduct(p2.vel - p1.vel , p2.pos - p1.pos)/ (Vector.len(p2.pos- p1.pos)**2) * (2*p1.mass/(p1.mass+p2.mass))
-
-        p1.vel = v1
-        p2.vel = v2
-
-# https://en.wikipedia.org/wiki/Elastic_collision
+            p1.vel = v1
+            p2.vel = v2
+            p1.color = colorNature
+            p2.color = colorNature
