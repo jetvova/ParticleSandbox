@@ -5,9 +5,9 @@ from vector import Vector
 from particle import Particle
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 10
+n = 100
 totalvel = 1000
-maxradius = 50
+maxradius = 20
 maxpos = 500
 
 plist = []
@@ -17,7 +17,7 @@ for i in range (0,n):
     p1.mass = 1.0
     p1.pos = Vector(float(random.randint(20, maxpos)), float(random.randint(20, maxpos)))
     p1.vel = Vector(random.randint(0,totalvel)/5.0, random.randint(0, totalvel)/5.0)
-    p1.radius = float(random.randint(1, maxradius))
+    p1.radius = float(random.randint(10, maxradius))
     p1.mass = p1.radius**3
     plist.append(p1)
 
@@ -49,6 +49,7 @@ while True:
     now = time.time()
     dt = now - t
     t = now
+
 
     screen.fill(black)
     fps = 1 / dt

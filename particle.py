@@ -45,6 +45,7 @@ class Particle:
     @staticmethod
     def Bounce(p1, p2):
         collisionVelocity = Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos))
+        collisionEnergy = ((collisionVelocity ** 2)*(p1.mass+p2.mass))/2
         if collisionVelocity < 0:
             # https://en.wikipedia.org/wiki/Elastic_collision
             v1 = p1.vel-(p1.pos-p2.pos) * Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos)**2) * (2*p2.mass/(p1.mass+p2.mass))
@@ -52,5 +53,7 @@ class Particle:
 
             p1.vel = v1
             p2.vel = v2
-            p1.color = colorNature
-            p2.color = colorNature
+            print collisionEnergy, collisionVelocity
+            if collisionEnergy > 1E9:
+                p1.color = colorNature
+                p2.color = colorNature
