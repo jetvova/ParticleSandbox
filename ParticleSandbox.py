@@ -5,7 +5,7 @@ from vector import Vector
 from particle import Particle
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 100
+n = 200
 totalvel = 1000
 maxradius = 20
 maxpos = 500
@@ -67,10 +67,15 @@ while True:
         for j in range (i+1, n):
             pi = plist[i]
             pj = plist[j]
-            if Vector.dist(pi.pos, pj.pos) < pi.radius + pj.radius:
-                Particle.Bounce(pi, pj)
-
-
+            if not pi.deleted and not pj.deleted:
+                if Vector.dist(pi.pos, pj.pos) < pi.radius + pj.radius:
+                    Particle.Bounce(pi, pj)
+    i = 0
+    while i < n:
+        if plist[i].deleted:
+            del plist[i]
+            n = n - 1
+        i = i + 1
     pygame.display.update()
 
     for event in pygame.event.get():

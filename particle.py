@@ -1,6 +1,7 @@
 import pygame
 from vector import Vector
-
+gray = (125,125,125)
+darkGray = (25,25,25)
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
@@ -17,7 +18,11 @@ class Particle:
         self.radius = 1.0
         self.color = blue
         self.mass = 1.0
+        self.deleted = False
+
     def draw(self, screen):
+        if self.deleted:
+            self.color = darkGray
         pygame.draw.circle(screen, self.color, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10.0)+1)
 
     def movement(self, dt):
@@ -57,3 +62,7 @@ class Particle:
             if collisionEnergy > 1E9:
                 p1.color = colorNature
                 p2.color = colorNature
+                p1.deleted = True
+                p2.mass = p2.mass + p1.mass
+                #p2.radius = max(p1.radius, p2.radius)
+                p2.radius = ((p1.radius**3) + (p2.radius**3)) ** (1.0/3.0)
