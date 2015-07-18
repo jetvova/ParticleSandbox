@@ -64,5 +64,5 @@ class Particle:
                 p2.color = colorNature
                 p1.deleted = True
                 p2.mass = p2.mass + p1.mass
-                #p2.radius = max(p1.radius, p2.radius)
                 p2.radius = ((p1.radius**3) + (p2.radius**3)) ** (1.0/3.0)
+                p2.vel = (p1.vel*p1.mass + p2.vel*p2.mass)/(p1.mass + p2.mass)

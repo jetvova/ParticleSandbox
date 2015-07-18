@@ -16,6 +16,10 @@ class Vector:
     def __sub__(v1, v2):
         return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)
 
+    def __add__(v1, v2):
+        return Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z)
+
+
     def len(self):
         return math.sqrt(self.x**2 + self.y**2 + self.z**2)
 
