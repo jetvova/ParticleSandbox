@@ -4,6 +4,10 @@ import pygame, sys, random, time, math
 from vector import Vector
 from particle import Particle
 
+from ocempgui.widgets import *
+from ocempgui.widgets.components import TextListItem
+from ocempgui.widgets.Constants import *
+
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 n = 20
 totalvel = 9000
@@ -30,11 +34,26 @@ for i in range (0,n):
 
 
 #================================================
-
+maxScreenX=1000
+maxScreenY=700
 
 pygame.init()
-screen = pygame.display.set_mode((600, 600))
+screen = pygame.display.set_mode((maxScreenX, maxScreenY))
 myfont = pygame.font.SysFont("monospace", 20)
+
+gui = Renderer()
+gui.screen = screen
+
+uiWidth = 100
+butn = Button ("Foo")
+butn.topleft = (maxScreenX - 60, 10)
+def test():
+    print ("proteinbar")
+gui.add_widget (butn)
+butn.connect_signal(SIG_CLICKED,test,)
+
+
+gray = (64,64,64)
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
@@ -76,7 +95,7 @@ while True:
 
     for i in range (0,n):
         plist[i].movement(dt)
-        plist[i].walls()
+        plist[i].walls(maxScreenX, maxScreenY)
 
     for i in range (0, n):
         for j in range (i+1, n):
@@ -91,10 +110,19 @@ while True:
             del plist[i]
             n = n - 1
         i = i + 1
+
+    rect = pygame.Surface((uiWidth,maxScreenY), pygame.SRCALPHA, 32)
+    rect.fill((23, 100, 255, 50))
+    screen.blit(rect, (maxScreenX - uiWidth,0))
+
+    gui.update()
+    gui.refresh()
     pygame.display.update()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        else:
+            gui.distribute_events((event))
 

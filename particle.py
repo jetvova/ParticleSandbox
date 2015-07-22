@@ -29,22 +29,22 @@ class Particle:
         self.pos.x = self.pos.x+(self.vel.x*dt)
         self.pos.y = self.pos.y+(self.vel.y*dt)
 
-    def walls(self):
+    def walls(self, maxX, maxY):
         if self.pos.x < self.radius:
             self.vel.x = -self.vel.x
             self.pos.x = self.radius
 
-        if self.pos.x > 600-self.radius:
+        if self.pos.x > maxX-self.radius:
             self.vel.x = -self.vel.x
-            self.pos.x = 600-self.radius
+            self.pos.x = maxX-self.radius
 
         if self.pos.y < self.radius:
             self.vel.y = -self.vel.y
             self.pos.y = self.radius
 
-        if self.pos.y > 600-self.radius:
+        if self.pos.y > maxY-self.radius:
             self.vel.y = -self.vel.y
-            self.pos.y = 600-self.radius
+            self.pos.y = maxY-self.radius
 
 
     @staticmethod
