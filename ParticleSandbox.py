@@ -111,18 +111,21 @@ while True:
             n = n - 1
         i = i + 1
 
-    rect = pygame.Surface((uiWidth,maxScreenY), pygame.SRCALPHA, 32)
-    rect.fill((23, 100, 255, 50))
-    screen.blit(rect, (maxScreenX - uiWidth,0))
+    if drawUi == True:
+        rect = pygame.Surface((uiWidth,maxScreenY), pygame.SRCALPHA, 32)
+        rect.fill((23, 100, 255, 50))
+        screen.blit(rect, (maxScreenX - uiWidth,0))
+        gui.update()
+        gui.refresh()
 
-    gui.update()
-    gui.refresh()
     pygame.display.update()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        else:
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSLASH:
+           drawUi = not drawUi
+        elif drawUi:
             gui.distribute_events((event))
 
