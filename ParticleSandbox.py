@@ -62,6 +62,8 @@ white = (255,255,255)
 black = (0,0,0)
 pink = (255,200,200)
 
+
+drawUi = True
 t=time.time()
 averageFps = 0.0
 
