@@ -9,11 +9,21 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 20
-totalvel = 9000
-maxradius = 10
-minradius = 5
+n = 2
+totalvel = 1000
+maxradius = 30
+minradius = 25
 maxpos = 500
+
+maxScreenX=1000
+maxScreenY=700
+
+heatMapSquareSideLength = 25
+
+heatMapQuantityX = maxScreenX/heatMapSquareSideLength
+heatMapQuantityY = maxScreenY/heatMapSquareSideLength
+
+
 
 plist = []
 
@@ -34,8 +44,7 @@ for i in range (0,n):
 
 
 #================================================
-maxScreenX=1000
-maxScreenY=700
+
 
 pygame.init()
 screen = pygame.display.set_mode((maxScreenX, maxScreenY))
@@ -73,7 +82,25 @@ while True:
     t = now
 
 
-    screen.fill(black)
+    #screen.fill(black)
+    for i in range (0,heatMapQuantityX):
+        for j in range (0,heatMapQuantityY):
+            squareCenterPosition = Vector((i+0.5)*heatMapSquareSideLength,(j+0.5)*heatMapSquareSideLength,0.0)
+
+            gravity = 0
+
+            for k in range (0, n):
+                dist = Vector.len(squareCenterPosition - plist[k].pos)
+                gravity = gravity + plist[k].mass/(dist**2)
+
+
+            c = int(gravity*50)
+            if c > 255:
+                c = 255
+            
+            pygame.draw.rect (screen, (c,0,0), (i*heatMapSquareSideLength,j*heatMapSquareSideLength,heatMapSquareSideLength,heatMapSquareSideLength))
+
+
     fps = 1 / dt
     averageFps = (fps + (10*averageFps))/11
     label = myfont.render("FPS=" + str(int(averageFps)), 1, (255,255,0))
