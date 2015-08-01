@@ -26,8 +26,8 @@ class Particle:
         pygame.draw.circle(screen, self.color, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10.0)+1)
 
     def movement(self, dt):
-        self.pos.x = self.pos.x+(self.vel.x*dt)
-        self.pos.y = self.pos.y+(self.vel.y*dt)
+        self.pos.x = self.pos.x+(self.vel.x*dt)/3.0
+        self.pos.y = self.pos.y+(self.vel.y*dt)/3.0
 
     def walls(self, maxX, maxY):
         if self.pos.x < self.radius:

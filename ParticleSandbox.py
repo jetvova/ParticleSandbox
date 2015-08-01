@@ -9,16 +9,16 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 2
+n = 4
 totalvel = 1000
 maxradius = 30
-minradius = 25
+minradius = 10
 maxpos = 500
 
 maxScreenX=1000
 maxScreenY=700
 
-heatMapSquareSideLength = 25
+heatMapSquareSideLength = 5
 
 heatMapQuantityX = maxScreenX/heatMapSquareSideLength
 heatMapQuantityY = maxScreenY/heatMapSquareSideLength
@@ -87,17 +87,18 @@ while True:
         for j in range (0,heatMapQuantityY):
             squareCenterPosition = Vector((i+0.5)*heatMapSquareSideLength,(j+0.5)*heatMapSquareSideLength,0.0)
 
-            gravity = 0
+            gravity = Vector(0.0, 0.0, 0.0)
 
             for k in range (0, n):
-                dist = Vector.len(squareCenterPosition - plist[k].pos)
-                gravity = gravity + plist[k].mass/(dist**2)
+                distVector = squareCenterPosition - plist[k].pos
+                dist = Vector.len(distVector)
+                partialGravity = (distVector/dist) * (plist[k].mass/(dist**2))
+                gravity = gravity + partialGravity
 
-
-            c = int(gravity*50)
+            c = int(Vector.len(gravity)*90)
             if c > 255:
                 c = 255
-            
+
             pygame.draw.rect (screen, (c,0,0), (i*heatMapSquareSideLength,j*heatMapSquareSideLength,heatMapSquareSideLength,heatMapSquareSideLength))
 
 
