@@ -71,7 +71,7 @@ white = (255,255,255)
 black = (0,0,0)
 pink = (255,200,200)
 
-
+heatMap = False
 drawUi = True
 t=time.time()
 averageFps = 0.0
@@ -82,25 +82,27 @@ while True:
     t = now
 
 
-    #screen.fill(black)
-    for i in range (0,heatMapQuantityX):
-        for j in range (0,heatMapQuantityY):
-            squareCenterPosition = Vector((i+0.5)*heatMapSquareSideLength,(j+0.5)*heatMapSquareSideLength,0.0)
 
-            gravity = Vector(0.0, 0.0, 0.0)
+    if heatMap:
+        for i in range (0,heatMapQuantityX):
+            for j in range (0,heatMapQuantityY):
+                squareCenterPosition = Vector((i+0.5)*heatMapSquareSideLength,(j+0.5)*heatMapSquareSideLength,0.0)
 
-            for k in range (0, n):
-                distVector = squareCenterPosition - plist[k].pos
-                dist = Vector.len(distVector)
-                partialGravity = (distVector/dist) * (plist[k].mass/(dist**2))
-                gravity = gravity + partialGravity
+                gravity = Vector(0.0, 0.0, 0.0)
 
-            c = int(Vector.len(gravity)*90)
-            if c > 255:
-                c = 255
+                for k in range (0, n):
+                    distVector = squareCenterPosition - plist[k].pos
+                    dist = Vector.len(distVector)
+                    partialGravity = (distVector/dist) * (plist[k].mass/(dist**2))
+                    gravity = gravity + partialGravity
 
-            pygame.draw.rect (screen, (c,0,0), (i*heatMapSquareSideLength,j*heatMapSquareSideLength,heatMapSquareSideLength,heatMapSquareSideLength))
+                c = int(Vector.len(gravity)*90)
+                if c > 255:
+                    c = 255
 
+                pygame.draw.rect (screen, (c,0,0), (i*heatMapSquareSideLength,j*heatMapSquareSideLength,heatMapSquareSideLength,heatMapSquareSideLength))
+    else:
+        screen.fill(black)
 
     fps = 1 / dt
     averageFps = (fps + (10*averageFps))/11
@@ -156,6 +158,11 @@ while True:
             sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSLASH:
            drawUi = not drawUi
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_h:
+           heatMap = not heatMap
+
         elif drawUi:
             gui.distribute_events((event))
+
 
