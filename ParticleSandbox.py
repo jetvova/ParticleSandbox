@@ -18,7 +18,7 @@ maxpos = 500
 maxScreenX=1000
 maxScreenY=700
 
-heatMapSquareSideLength = 5
+heatMapSquareSideLength = 2
 
 heatMapQuantityX = maxScreenX/heatMapSquareSideLength
 heatMapQuantityY = maxScreenY/heatMapSquareSideLength
@@ -96,9 +96,13 @@ while True:
                     partialGravity = (distVector/dist) * (plist[k].mass/(dist**2))
                     gravity = gravity + partialGravity
 
-                c = int(Vector.len(gravity)*90)
+                # Calculates hetamapsquare color
+                c = int(Vector.len(gravity)*50)
                 if c > 255:
                     c = 255
+                if (c % 2) != 0:
+                    c = 0
+                #c = int((math.sin(5/Vector.len(gravity)) + 1)*126)
 
                 pygame.draw.rect (screen, (c,0,0), (i*heatMapSquareSideLength,j*heatMapSquareSideLength,heatMapSquareSideLength,heatMapSquareSideLength))
     else:
