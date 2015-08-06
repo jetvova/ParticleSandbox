@@ -15,10 +15,10 @@ maxradius = 30
 minradius = 10
 maxpos = 500
 
-maxScreenX=1000
+maxScreenX=1300
 maxScreenY=700
 
-heatMapSquareSideLength = 2
+heatMapSquareSideLength = 10
 
 heatMapQuantityX = maxScreenX/heatMapSquareSideLength
 heatMapQuantityY = maxScreenY/heatMapSquareSideLength
@@ -53,13 +53,53 @@ myfont = pygame.font.SysFont("monospace", 20)
 gui = Renderer()
 gui.screen = screen
 
-uiWidth = 100
+uiWidth = 200
+tab = 1
+
+mainframe = VFrame()
+mainframe.set_position(maxScreenX-uiWidth,0)
+mainframe.set_size(uiWidth,maxScreenY)
+gui.add_widget (mainframe)
+
+tabgroup = HFrame()
+mainframe.add_child(tabgroup)
+tabgroup.set_padding(0)
+tabgroup.set_spacing(0)
+
+tab1 = VFrame()
+
+butn = ToggleButton ("tab1")
+#butn.topleft = (maxScreenX - 200, 1)
+def test3():
+    global tab1
+    tab1 = 2
+tabgroup.add_child (butn)
+butn.connect_signal(SIG_CLICKED,test3,)
+
+tabgroup.add_child(ToggleButton("tab2"))
+tabgroup.add_child(ToggleButton("tab3"))
+tabgroup.add_child(ToggleButton("tab4"))
+tabgroup.add_child(ToggleButton("tab5"))
+
 butn = Button ("Foo")
-butn.topleft = (maxScreenX - 60, 10)
+#butn.topleft = (maxScreenX - 180, 50)
 def test():
     print ("proteinbar")
-gui.add_widget (butn)
+tab1.add_child(butn)
 butn.connect_signal(SIG_CLICKED,test,)
+
+HMbutton = CheckButton ("HM")
+#butn2.topleft = (maxScreenX - 180, 90)
+def HMbuttonToggled():
+    global heatMap
+    heatMap = HMbutton.active
+tab1.add_child(HMbutton)
+HMbutton.connect_signal(SIG_TOGGLED,HMbuttonToggled,)
+mainframe.add_child(tab1)
+
+
+
+
 
 
 gray = (64,64,64)
