@@ -66,17 +66,26 @@ tabgroup.set_padding(0)
 tabgroup.set_spacing(0)
 
 tab1 = VFrame()
+allTabButtons = []
 allTabs = []
+activeTab = 0
 def tabButnClicked(i):
-    for j in range (0, len (allTabs)):
-        allTabs [j].active   = (i == j)
+    for j in range (0, len (allTabButtons)):
+        allTabButtons [j].active   = (i == j)
+    if activeTab != i:
+        mainframe.remove_child(allTabs[activeTab])
+        global activeTab
+        activeTab = i
+        mainframe.add_child (allTabs[activeTab])
+
+
 for i in range (0, 5):
     tabButn = ToggleButton ("tab" + str(i + 1))
     tabgroup.add_child (tabButn)
     tabButn.connect_signal(SIG_TOGGLED,lambda j=i: tabButnClicked(j),)
-    allTabs.append (tabButn)
+    allTabButtons.append (tabButn)
 mainframe.add_child(tabgroup)
-
+allTabButtons [0].active = True
 butn2 = Button ("Foo")
 #butn.topleft = (maxScreenX - 180, 50)
 def test():
@@ -90,10 +99,15 @@ HMbutton = CheckButton ("Heat Map")
 def HMbuttonToggled():
     global heatMap
     heatMap = HMbutton.active
-tab1.add_child(HMbutton)
-HMbutton.connect_signal(SIG_TOGGLED,HMbuttonToggled,)
 mainframe.add_child(tab1)
+allTabs.append (tab1)
 
+tab2 = VFrame()
+tab2.add_child(HMbutton)
+HMbutton.connect_signal(SIG_TOGGLED,HMbuttonToggled,)
+allTabs.append (tab2)
+for i in range (0, 3):
+    allTabs.append (VFrame())
 
 
 
