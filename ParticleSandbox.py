@@ -62,33 +62,30 @@ mainframe.set_size(uiWidth,maxScreenY)
 gui.add_widget (mainframe)
 
 tabgroup = HFrame()
-mainframe.add_child(tabgroup)
 tabgroup.set_padding(0)
 tabgroup.set_spacing(0)
 
 tab1 = VFrame()
+allTabs = []
+def tabButnClicked(i):
+    for j in range (0, len (allTabs)):
+        allTabs [j].active   = (i == j)
+for i in range (0, 5):
+    tabButn = ToggleButton ("tab" + str(i + 1))
+    tabgroup.add_child (tabButn)
+    tabButn.connect_signal(SIG_TOGGLED,lambda j=i: tabButnClicked(j),)
+    allTabs.append (tabButn)
+mainframe.add_child(tabgroup)
 
-butn = ToggleButton ("tab1")
-#butn.topleft = (maxScreenX - 200, 1)
-def test3():
-    global tab1
-    tab1 = 2
-tabgroup.add_child (butn)
-butn.connect_signal(SIG_CLICKED,test3,)
-
-tabgroup.add_child(ToggleButton("tab2"))
-tabgroup.add_child(ToggleButton("tab3"))
-tabgroup.add_child(ToggleButton("tab4"))
-tabgroup.add_child(ToggleButton("tab5"))
-
-butn = Button ("Foo")
+butn2 = Button ("Foo")
 #butn.topleft = (maxScreenX - 180, 50)
 def test():
-    print ("proteinbar")
-tab1.add_child(butn)
-butn.connect_signal(SIG_CLICKED,test,)
+    print "proteinbar"
 
-HMbutton = CheckButton ("HM")
+tab1.add_child(butn2)
+butn2.connect_signal(SIG_CLICKED,test,)
+
+HMbutton = CheckButton ("Heat Map")
 #butn2.topleft = (maxScreenX - 180, 90)
 def HMbuttonToggled():
     global heatMap
