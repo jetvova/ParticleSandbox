@@ -16,6 +16,8 @@ minradius = 10
 maxpos = 500
 zoomFactor = 0.5
 panPos = Vector(0.0, 0.0, 0.0)
+timeFactor = 1.0
+
 
 maxScreenX=1300
 maxScreenY=700
@@ -178,13 +180,14 @@ while True:
     label = myfont.render("Zoom=" + str(float(zoomFactor)), 1, (255,255,0))
     screen.blit(label, (5, 105))
 
-
+    label = myfont.render("TimeFact.=" + str(float(timeFactor)), 1, (255,255,0))
+    screen.blit(label, (5, 125))
 
     for i in range (0,n):
         plist[i].draw(screen, zoomFactor, panPos)
 
     for i in range (0,n):
-        plist[i].movement(dt)
+        plist[i].movement(dt, timeFactor)
         plist[i].walls(maxScreenX, maxScreenY)
 
     for i in range (0, n):
@@ -239,8 +242,12 @@ while True:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             panPos.y = panPos.y + 50
 
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_PERIOD:
+            timeFactor = min(timeFactor * 2, 2**6)
 
-
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_COMMA:
+            timeFactor = max(timeFactor / 2, 0.03125)
+            #timeFactor = timeFactor - 1
         elif drawUi:
             gui.distribute_events((event))
 
