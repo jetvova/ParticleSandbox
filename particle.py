@@ -20,13 +20,16 @@ class Particle:
         self.mass = 1.0
         self.deleted = False
 
-    def draw(self, screen):
+    def draw(self, screen, zoomFactor, panPos):
         if self.deleted:
             self.color = darkGray
-        pygame.draw.circle(screen, self.color, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10.0)+1)
-
-
-
+        drawPos = self.pos * zoomFactor - panPos
+        pygame.draw.circle(
+            screen,
+            self.color,
+            (int(drawPos.x), int(drawPos.y)),
+            int(self.radius*zoomFactor),
+            int(self.radius*zoomFactor/10.0)+1)
 
     "    TIME CONTROL   "
     def movement(self, dt):

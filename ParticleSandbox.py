@@ -14,6 +14,8 @@ totalvel = 3000
 maxradius = 30
 minradius = 10
 maxpos = 500
+zoomFactor = 0.5
+panPos = Vector(0.0, 0.0, 0.0)
 
 maxScreenX=1300
 maxScreenY=700
@@ -173,9 +175,13 @@ while True:
     label = myfont.render("MinRadius=" + str(int(minradius)), 1, (255,255,0))
     screen.blit(label, (5, 85))
 
+    label = myfont.render("Zoom=" + str(float(zoomFactor)), 1, (255,255,0))
+    screen.blit(label, (5, 105))
+
+
 
     for i in range (0,n):
-        plist[i].draw(screen)
+        plist[i].draw(screen, zoomFactor, panPos)
 
     for i in range (0,n):
         plist[i].movement(dt)
@@ -213,6 +219,27 @@ while True:
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_h:
            heatMap = not heatMap
+
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
+           zoomFactor = min(zoomFactor * 1.1, 50)
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
+           zoomFactor = max(zoomFactor / 1.1, 0.1)
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            panPos.x = panPos.x + 50
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            panPos.x = panPos.x - 50
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            panPos.y = panPos.y - 50
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            panPos.y = panPos.y + 50
+
+
 
         elif drawUi:
             gui.distribute_events((event))
