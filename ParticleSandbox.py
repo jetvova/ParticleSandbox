@@ -9,8 +9,8 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 4
-totalvel = 1000
+n = 5
+totalvel = 2000
 maxradius = 30
 minradius = 10
 maxpos = 500
@@ -108,9 +108,6 @@ HMbutton.connect_signal(SIG_TOGGLED,HMbuttonToggled,)
 allTabs.append (tab2)
 for i in range (0, 3):
     allTabs.append (VFrame())
-
-
-
 
 
 gray = (64,64,64)

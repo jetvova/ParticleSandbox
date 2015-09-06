@@ -25,9 +25,13 @@ class Particle:
             self.color = darkGray
         pygame.draw.circle(screen, self.color, (int(self.pos.x),int(self.pos.y)), int(self.radius), int(self.radius/10.0)+1)
 
+
+
+
+    "    TIME CONTROL   "
     def movement(self, dt):
-        self.pos.x = self.pos.x+(self.vel.x*dt)/3.0
-        self.pos.y = self.pos.y+(self.vel.y*dt)/3.0
+        self.pos.x = self.pos.x+(self.vel.x*dt)/1.0
+        self.pos.y = self.pos.y+(self.vel.y*dt)/1.0
 
     def walls(self, maxX, maxY):
         if self.pos.x < self.radius:
@@ -66,3 +70,4 @@ class Particle:
                 p2.mass = p2.mass + p1.mass
                 p2.radius = ((p1.radius**3) + (p2.radius**3)) ** (1.0/3.0)
                 p2.vel = (p1.vel*p1.mass + p2.vel*p2.mass)/(p1.mass + p2.mass)
+                p2.pos = (p1.pos + p2.pos)/2.0
