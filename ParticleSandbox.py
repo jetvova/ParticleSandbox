@@ -9,7 +9,7 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 5
+n = 10
 totalvel = 3000
 maxradius = 30
 minradius = 10
@@ -17,7 +17,7 @@ maxpos = 500
 zoomFactor = 0.5
 panPos = Vector(0.0, 0.0, 0.0)
 timeFactor = 1.0
-
+fusionLight = 0.0
 
 maxScreenX=1300
 maxScreenY=700
@@ -127,6 +127,8 @@ heatMap = False
 drawUi = False
 t=time.time()
 averageFps = 0.0
+fusionCount = 0
+
 
 while True:
     now = time.time()
@@ -158,7 +160,7 @@ while True:
 
                 pygame.draw.rect (screen, (c,0,0), (i*heatMapSquareSideLength,j*heatMapSquareSideLength,heatMapSquareSideLength,heatMapSquareSideLength))
     else:
-        screen.fill(black)
+        screen.fill((int(fusionLight), int(fusionLight), int(fusionLight)))
 
     fps = 1 / dt
     averageFps = (fps + (10*averageFps))/11
@@ -189,14 +191,20 @@ while True:
     for i in range (0,n):
         plist[i].movement(dt, timeFactor)
         plist[i].walls(maxScreenX, maxScreenY)
-
+    fusionCount = 0
     for i in range (0, n):
         for j in range (i+1, n):
             pi = plist[i]
             pj = plist[j]
             if not pi.deleted and not pj.deleted:
                 if Vector.dist(pi.pos, pj.pos) < pi.radius + pj.radius:
-                    Particle.Bounce(pi, pj)
+                    fused = Particle.Bounce(pi, pj)
+                    if fused:
+                        fusionCount = fusionCount + 1
+    if fusionCount > 0:
+        fusionLight = 255.0
+    else:
+        fusionLight = max(0, fusionLight - (dt*255/0.10)*timeFactor)
     i = 0
     while i < n:
         if plist[i].deleted:
