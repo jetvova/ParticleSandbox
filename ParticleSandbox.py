@@ -10,7 +10,7 @@ from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 n = 5
-totalvel = 2000
+totalvel = 3000
 maxradius = 30
 minradius = 10
 maxpos = 500
@@ -120,7 +120,7 @@ black = (0,0,0)
 pink = (255,200,200)
 
 heatMap = False
-drawUi = True
+drawUi = False
 t=time.time()
 averageFps = 0.0
 
