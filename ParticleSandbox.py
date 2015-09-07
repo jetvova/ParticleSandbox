@@ -9,8 +9,8 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 10
-totalvel = 3000
+n = 5
+totalvel = 2000
 maxradius = 30
 minradius = 10
 maxpos = 500
@@ -18,6 +18,8 @@ zoomFactor = 0.5
 panPos = Vector(0.0, 0.0, 0.0)
 timeFactor = 1.0
 fusionLight = 0.0
+panDirection = Vector (0.0, 0.0, 0.0)
+zoomVel = 1.0
 
 maxScreenX=1300
 maxScreenY=700
@@ -205,6 +207,10 @@ while True:
         fusionLight = 255.0
     else:
         fusionLight = max(0, fusionLight - (dt*255/0.10)*timeFactor)
+
+    panPos = panPos + panDirection * dt * 400
+    zoomFactor = max(min(zoomFactor * (zoomVel**dt), 5), 0.1)
+
     i = 0
     while i < n:
         if plist[i].deleted:
@@ -233,22 +239,46 @@ while True:
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
-           zoomFactor = min(zoomFactor * 1.1, 50)
+           zoomVel = 2.5
+        elif event.type == pygame.KEYUP and event.key == pygame.K_EQUALS:
+           zoomVel = 1
+
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
-           zoomFactor = max(zoomFactor / 1.1, 0.1)
+           zoomVel = 1 / 2.5
+        elif event.type == pygame.KEYUP and event.key == pygame.K_MINUS:
+           zoomVel = 1
+
+
+
+
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-            panPos.x = panPos.x + 50
+            panDirection.x = 1.0
+        elif event.type == pygame.KEYUP and event.key == pygame.K_RIGHT:
+            panDirection.x = 0.0
+
+
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-            panPos.x = panPos.x - 50
+            panDirection.x = -1.0
+        elif event.type == pygame.KEYUP and event.key == pygame.K_LEFT:
+            panDirection.x = 0.0
+
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-            panPos.y = panPos.y - 50
+            panDirection.y = -1.0
+        elif event.type == pygame.KEYUP and event.key == pygame.K_UP:
+            panDirection.y = 0.0
+
+
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-            panPos.y = panPos.y + 50
+            panDirection.y = 1.0
+        elif event.type == pygame.KEYUP and event.key == pygame.K_DOWN:
+            panDirection.y = 0.0
+
+
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_PERIOD:
             timeFactor = min(timeFactor * 2, 2**6)
