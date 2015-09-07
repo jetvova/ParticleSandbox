@@ -9,10 +9,10 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 5
-totalvel = 2000
+n = 10
+startingvel = 1000
 maxradius = 30
-minradius = 10
+minradius = 20
 maxpos = 500
 zoomFactor = 0.5
 panPos = Vector(0.0, 0.0, 0.0)
@@ -20,7 +20,7 @@ timeFactor = 1.0
 fusionLight = 0.0
 panDirection = Vector (0.0, 0.0, 0.0)
 zoomVel = 1.0
-
+totalenergy = 0.0
 maxScreenX=1300
 maxScreenY=700
 
@@ -37,7 +37,7 @@ for i in range (0,n):
     p1 = Particle()
     p1.mass = 1.0
     p1.pos = Vector(float(random.randint(20, maxpos)), float(random.randint(20, maxpos)))
-    p1.vel = Vector(random.randint(0,totalvel)/5.0, random.randint(0, totalvel)/5.0)
+    p1.vel = Vector(random.randint(0,startingvel)/5.0, random.randint(0, startingvel)/5.0)
     p1.radius = float(random.randint(minradius, maxradius))
     p1.mass = p1.radius**3
     plist.append(p1)
@@ -172,8 +172,11 @@ while True:
     label = myfont.render("N=" + str(int(n)), 1, (255,255,0))
     screen.blit(label, (5, 25))
 
-    label = myfont.render("TotalVel=" + str(int(totalvel)), 1, (255,255,0))
+    label = myfont.render("StartVel=" + str(int(startingvel)), 1, (255,255,0))
     screen.blit(label, (5, 45))
+
+    label = myfont.render("TotalEnergy=" + str(int(totalenergy)), 1, (255,255,0))
+    screen.blit(label, (5, 145))
 
     label = myfont.render("MaxRadius=" + str(int(maxradius)), 1, (255,255,0))
     screen.blit(label, (5, 65))
@@ -207,6 +210,19 @@ while True:
         fusionLight = 255.0
     else:
         fusionLight = max(0, fusionLight - (dt*255/0.10)*timeFactor)
+
+
+    "=-=-=-=-=-=-=-=-=-=-=-=-=-=  PLACEHOLDER FUSION ENERGY  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
+    EnergyReleased = fusionCount * 1e10
+    "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
+    totalenergy = 0
+    for i in range (0, n):
+        pi = plist[i]
+        kineticEnergy = pi.vel.len()**2 * pi.mass / 2
+        kineticEnergy = kineticEnergy + EnergyReleased / n
+        newVelocity = math.sqrt(2*kineticEnergy/pi.mass)
+        pi.vel = (pi.vel * newVelocity / pi.vel.len())
+        totalenergy = totalenergy + newVelocity
 
     panPos = panPos + panDirection * dt * 400
     zoomFactor = max(min(zoomFactor * (zoomVel**dt), 5), 0.1)
