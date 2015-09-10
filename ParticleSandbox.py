@@ -9,10 +9,10 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 7
+n = 10
 startingvel = 1000
-maxradius = 50
-minradius = 40
+maxradius = 30
+minradius = 20
 maxpos = 500
 zoomFactor = 0.5
 panPos = Vector(0.0, 0.0, 0.0)
@@ -23,7 +23,7 @@ zoomVel = 1.0
 totalenergy = 0.0
 maxScreenX=1300
 maxScreenY=700
-enableFusion = True
+enableFusion = False
 
 heatMapSquareSideLength = 10
 
@@ -43,8 +43,17 @@ for i in range (0,n):
     p1.mass = p1.radius**3
     plist.append(p1)
 
+"""
+Physics debug settings:
+plist[0].pos = Vector(400.0, 400.0, 0.0)
+plist[1].pos = Vector(800.0, 400.0, 0.0)
 
+plist[0].vel = Vector(40.0, 0.0, 0.0)
+plist[1].vel = Vector(-40.0, 0.0, 0.0)
 
+plist[0].mass = 100.0
+plist[1].mass = 100.0
+"""
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -140,7 +149,7 @@ drawUi = False
 t=time.time()
 averageFps = 0.0
 fusionCount = 0
-enableFusion = False
+
 
 while True:
     now = time.time()
@@ -232,7 +241,7 @@ while True:
         kineticEnergy = kineticEnergy + EnergyReleased / n
         newVelocity = math.sqrt(2*kineticEnergy/pi.mass)
         pi.vel = (pi.vel * newVelocity / pi.vel.len())
-        totalenergy = totalenergy + newVelocity
+        totalenergy = totalenergy + kineticEnergy
 
     panPos = panPos + panDirection * dt * 400
     zoomFactor = max(min(zoomFactor * (zoomVel**dt), 5), 0.1)

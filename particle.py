@@ -10,6 +10,11 @@ white = (255,255,255)
 black = (0,0,0)
 pink = (255,200,200)
 colorNature = (0,160,0)
+
+
+
+
+
 class Particle:
     def __init__(self):
         self.pos = Vector (0.0, 0.0, 0.0)
@@ -64,7 +69,7 @@ class Particle:
 
             p1.vel = v1
             p2.vel = v2
-            print collisionEnergy, collisionVelocity
+            print collisionEnergy, collisionVelocity, enableFusion
             if collisionEnergy > 1E9 and enableFusion:
                 p1.color = colorNature
                 p2.color = colorNature
