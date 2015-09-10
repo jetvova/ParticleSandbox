@@ -9,10 +9,10 @@ from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 10
+n = 7
 startingvel = 1000
-maxradius = 30
-minradius = 20
+maxradius = 50
+minradius = 40
 maxpos = 500
 zoomFactor = 0.5
 panPos = Vector(0.0, 0.0, 0.0)
@@ -23,6 +23,7 @@ zoomVel = 1.0
 totalenergy = 0.0
 maxScreenX=1300
 maxScreenY=700
+enableFusion = True
 
 heatMapSquareSideLength = 10
 
@@ -101,16 +102,25 @@ tab1.add_child(butn2)
 butn2.connect_signal(SIG_CLICKED,test,)
 
 HMbutton = CheckButton ("Heat Map")
+Fbutton = CheckButton ("Enable Fusion")
+Fbutton.set_active(enableFusion)
 #butn2.topleft = (maxScreenX - 180, 90)
 def HMbuttonToggled():
     global heatMap
     heatMap = HMbutton.active
+def FbuttonToggled():
+    global enableFusion
+    enableFusion = Fbutton.active
+
+
 mainframe.add_child(tab1)
 allTabs.append (tab1)
 
 tab2 = VFrame()
 tab2.add_child(HMbutton)
+tab2.add_child(Fbutton)
 HMbutton.connect_signal(SIG_TOGGLED,HMbuttonToggled,)
+Fbutton.connect_signal(SIG_TOGGLED,FbuttonToggled,)
 allTabs.append (tab2)
 for i in range (0, 3):
     allTabs.append (VFrame())
@@ -130,7 +140,7 @@ drawUi = False
 t=time.time()
 averageFps = 0.0
 fusionCount = 0
-
+enableFusion = False
 
 while True:
     now = time.time()
@@ -203,7 +213,7 @@ while True:
             pj = plist[j]
             if not pi.deleted and not pj.deleted:
                 if Vector.dist(pi.pos, pj.pos) < pi.radius + pj.radius:
-                    fused = Particle.Bounce(pi, pj)
+                    fused = Particle.Bounce(pi, pj, enableFusion)
                     if fused:
                         fusionCount = fusionCount + 1
     if fusionCount > 0:

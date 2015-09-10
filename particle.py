@@ -54,7 +54,7 @@ class Particle:
 
 
     @staticmethod
-    def Bounce(p1, p2):
+    def Bounce(p1, p2, enableFusion):
         collisionVelocity = Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos))
         collisionEnergy = ((collisionVelocity ** 2)*(p1.mass+p2.mass))/2
         if collisionVelocity < 0:
@@ -65,7 +65,7 @@ class Particle:
             p1.vel = v1
             p2.vel = v2
             print collisionEnergy, collisionVelocity
-            if collisionEnergy > 1E9:
+            if collisionEnergy > 1E9 and enableFusion:
                 p1.color = colorNature
                 p2.color = colorNature
                 p1.deleted = True
