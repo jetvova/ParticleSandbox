@@ -10,13 +10,13 @@ from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 n = 10
-startingvel = 1000
+startingvel = 2000
 maxradius = 30
 minradius = 20
 maxpos = 500
-zoomFactor = 0.5
+zoomFactor = 1E+10
 panPos = Vector(0.0, 0.0, 0.0)
-timeFactor = 1.0
+timeFactor = 2.0**-35
 fusionLight = 0.0
 panDirection = Vector (0.0, 0.0, 0.0)
 zoomVel = 1.0
@@ -24,6 +24,10 @@ totalenergy = 0.0
 maxScreenX=1300
 maxScreenY=700
 enableFusion = False
+
+containerSize = Vector(1.0E-9, 1.0E-9, 1.0E-9)
+
+
 
 heatMapSquareSideLength = 10
 
@@ -36,11 +40,12 @@ plist = []
 
 for i in range (0,n):
     p1 = Particle()
-    p1.mass = 1.0
-    p1.pos = Vector(float(random.randint(20, maxpos)), float(random.randint(20, maxpos)))
-    p1.vel = Vector(random.randint(0,startingvel)/5.0, random.randint(0, startingvel)/5.0)
-    p1.radius = float(random.randint(minradius, maxradius))
-    p1.mass = p1.radius**3
+    p1.mass = 1.6737236E-27   # Atomic mass of H(ydrogen) in kilos
+    p1.pos = Vector(
+        random.randint(0, 1E6)/1E6 * containerSize.x,
+        random.randint(0, 1E6)/1E6 * containerSize.y)
+    p1.vel = Vector(random.randint(0,startingvel), random.randint(0, startingvel))
+    p1.radius = 5.3E-11  # Hydrogen atom radius in meters
     plist.append(p1)
 
 """
@@ -214,7 +219,7 @@ while True:
 
     for i in range (0,n):
         plist[i].movement(dt, timeFactor)
-        plist[i].walls(maxScreenX, maxScreenY)
+        plist[i].walls(containerSize.x, containerSize.y)
     fusionCount = 0
     for i in range (0, n):
         for j in range (i+1, n):
@@ -244,7 +249,7 @@ while True:
         totalenergy = totalenergy + kineticEnergy
 
     panPos = panPos + panDirection * dt * 400
-    zoomFactor = max(min(zoomFactor * (zoomVel**dt), 5), 0.1)
+    zoomFactor = max(min(zoomFactor * (zoomVel**dt), 5E+20), 0.01)
 
     i = 0
     while i < n:
@@ -274,13 +279,13 @@ while True:
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_EQUALS:
-           zoomVel = 2.5
+           zoomVel = 5.0
         elif event.type == pygame.KEYUP and event.key == pygame.K_EQUALS:
            zoomVel = 1
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_MINUS:
-           zoomVel = 1 / 2.5
+           zoomVel = 1 / 5.0
         elif event.type == pygame.KEYUP and event.key == pygame.K_MINUS:
            zoomVel = 1
 
@@ -316,10 +321,10 @@ while True:
 
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_PERIOD:
-            timeFactor = min(timeFactor * 2, 2**6)
+            timeFactor = min(timeFactor * 2, 2**8)
 
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_COMMA:
-            timeFactor = max(timeFactor / 2, 0.03125)
+            timeFactor = max(timeFactor / 2, 2.0**-75)
             #timeFactor = timeFactor - 1
         elif drawUi:
             gui.distribute_events((event))

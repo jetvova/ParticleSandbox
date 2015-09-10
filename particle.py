@@ -20,7 +20,7 @@ class Particle:
         self.pos = Vector (0.0, 0.0, 0.0)
         self.vel = Vector (0.0, 0.0, 0.0)
         self.radius = 1.0
-        self.color = blue
+        self.color = white
         self.mass = 1.0
         self.deleted = False
 
@@ -28,11 +28,13 @@ class Particle:
         if self.deleted:
             self.color = darkGray
         drawPos = self.pos * zoomFactor - panPos
+
+        drawRadius = max(1, int(self.radius * zoomFactor))
         pygame.draw.circle(
             screen,
             self.color,
             (int(drawPos.x), int(drawPos.y)),
-            int(self.radius*zoomFactor),
+            drawRadius,
             int(self.radius*zoomFactor/10.0)+1)
 
     "    TIME CONTROL   "
@@ -60,7 +62,10 @@ class Particle:
 
     @staticmethod
     def Bounce(p1, p2, enableFusion):
-        collisionVelocity = Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ (Vector.len(p1.pos- p2.pos))
+        distance = Vector.len(p1.pos - p2.pos)
+        if distance == 0:
+            return False
+        collisionVelocity = Vector.dotProduct(p1.vel - p2.vel , p1.pos - p2.pos)/ distance
         collisionEnergy = ((collisionVelocity ** 2)*(p1.mass+p2.mass))/2
         if collisionVelocity < 0:
             # https://en.wikipedia.org/wiki/Elastic_collision
