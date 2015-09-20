@@ -10,20 +10,24 @@ from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 n = 10
-startingvel = 2000
+T=2E7  #Temp in Kelvin.
+k = 1.3805E-23  #k is boltzman constant
+m = 1.6737236E-27   # Atomic mass of H(ydrogen) in kilos
+startingvel = math.sqrt(3*T*k/m)
+
 maxradius = 30
 minradius = 20
 maxpos = 500
 zoomFactor = 2E+11
 panPos = Vector(-650.0, -350.0, 0.0)
-timeFactor = 2.0**-45
+timeFactor = 2.0**-52
 fusionLight = 0.0
 panDirection = Vector (0.0, 0.0, 0.0)
 zoomVel = 1.0
 totalenergy = 0.0
 maxScreenX=1300
 maxScreenY=700
-enableFusion = False
+enableFusion = True
 
 containerSize = Vector(1.0E-9, 1.0E-9, 1.0E-9)
 
@@ -40,11 +44,11 @@ plist = []
 
 for i in range (0,n):
     p1 = Particle()
-    p1.mass = 1.6737236E-27   # Atomic mass of H(ydrogen) in kilos
+    p1.mass = m
     p1.pos = Vector(
         random.randint(0, 1E6)/1E6 * containerSize.x,
         random.randint(0, 1E6)/1E6 * containerSize.y)
-    p1.vel = Vector(random.randint(0,startingvel), random.randint(0, startingvel))
+    p1.vel = Vector(random.uniform(0,startingvel), random.uniform(0, startingvel))
     p1.radius = 5.3E-11  # Hydrogen atom radius in meters
     plist.append(p1)
 
@@ -233,7 +237,7 @@ while True:
     if fusionCount > 0:
         fusionLight = 255.0
     else:
-        fusionLight = max(0, fusionLight - (dt*255/0.10)*timeFactor)
+        fusionLight = max(0, fusionLight - (dt*255/1E-17)*timeFactor)
 
 
     "=-=-=-=-=-=-=-=-=-=-=-=-=-=  PLACEHOLDER FUSION ENERGY  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
