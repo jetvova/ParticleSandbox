@@ -14,9 +14,9 @@ startingvel = 2000
 maxradius = 30
 minradius = 20
 maxpos = 500
-zoomFactor = 1E+10
-panPos = Vector(0.0, 0.0, 0.0)
-timeFactor = 2.0**-35
+zoomFactor = 2E+11
+panPos = Vector(-650.0, -350.0, 0.0)
+timeFactor = 2.0**-45
 fusionLight = 0.0
 panDirection = Vector (0.0, 0.0, 0.0)
 zoomVel = 1.0
@@ -199,7 +199,7 @@ while True:
     label = myfont.render("StartVel=" + str(int(startingvel)), 1, (255,255,0))
     screen.blit(label, (5, 45))
 
-    label = myfont.render("TotalEnergy=" + str(int(totalenergy)), 1, (255,255,0))
+    label = myfont.render("TotalEnergy=" + str(totalenergy), 1, (255,255,0))
     screen.blit(label, (5, 145))
 
     label = myfont.render("MaxRadius=" + str(int(maxradius)), 1, (255,255,0))
@@ -239,7 +239,7 @@ while True:
     "=-=-=-=-=-=-=-=-=-=-=-=-=-=  PLACEHOLDER FUSION ENERGY  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
     EnergyReleased = fusionCount * 1e10
     "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
-    totalenergy = 0
+    totalenergy = 0.0
     for i in range (0, n):
         pi = plist[i]
         kineticEnergy = pi.vel.len()**2 * pi.mass / 2
