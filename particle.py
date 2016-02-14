@@ -74,7 +74,7 @@ class Particle:
 
             p1.vel = v1
             p2.vel = v2
-            print collisionEnergy, collisionVelocity, enableFusion
+            #print collisionEnergy, collisionVelocity, enableFusion
             if collisionEnergy > 1E-16 and enableFusion:
                 p1.color = colorNature
                 p2.color = colorNature

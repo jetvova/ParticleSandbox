@@ -3,13 +3,12 @@ from numpy.lib.function_base import average
 import pygame, sys, random, time, math
 from vector import Vector
 from particle import Particle
-
 from ocempgui.widgets import *
 from ocempgui.widgets.components import TextListItem
 from ocempgui.widgets.Constants import *
 
 #IMPORTANT VARIABLES=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-n = 10
+n = 200
 T=2E7  #Temp in Kelvin.
 k = 1.3805E-23  #k is boltzman constant
 m = 1.6737236E-27   # Atomic mass of H(ydrogen) in kilos
@@ -27,9 +26,9 @@ zoomVel = 1.0
 totalenergy = 0.0
 maxScreenX=1300
 maxScreenY=700
-enableFusion = True
+enableFusion = False
 
-containerSize = Vector(1.0E-9, 1.0E-9, 1.0E-9)
+containerSize = Vector(2.0E-9, 2.0E-9, 2.0E-9)
 
 
 
